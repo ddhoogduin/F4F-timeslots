@@ -21,6 +21,8 @@ class Engine(Scraper):
         if not os.path.isdir('./data'):
             os.mkdir('./data')
         if self.df.shape[0] > 0:
+            token = self.df['time_stamp']
+            token.to_csv('./data/new_token.csv')
             self.df.to_csv('./data/new.csv')
 
     def convert_dates(self, dates):
@@ -41,6 +43,7 @@ class Engine(Scraper):
             (self.df['date_stamp'].isin(dates)) &
             (self.df['places'] > 0 )
         ]
+
 
 
 
