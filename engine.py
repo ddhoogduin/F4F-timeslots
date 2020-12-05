@@ -21,7 +21,7 @@ class Engine(Scraper):
         if not os.path.isdir('./data'):
             os.mkdir('./data')
         if self.df.shape[0] > 0:
-            self.df.to_csv('./data/'+self.dt_string.replace(' ', '')+".csv")
+            self.df.to_csv('./data/new.csv')
 
     def convert_dates(self, dates):
         date_items = []
