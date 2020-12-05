@@ -18,5 +18,5 @@ do
         telegram-send --file data/new.csv --caption "Possible slots in coming 3 days"
       fi
   fi
-  sleep 900
+  sleep 300
 done
