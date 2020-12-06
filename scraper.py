@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
 from config import headers
+import calendar
 
 
 class Scraper:
@@ -16,18 +17,20 @@ class Scraper:
         for item in items:
             try:
                 for slot in item.findAll('li'):
+                    time_stamp = datetime.fromtimestamp(
+                                int(slot.find('span', itemprop='startDate').get('url-timestamp'))
+                            )
                     self.slots.append(
                         {
                             'type': slot.find('article').get('data-name'),
+                            'weekday': calendar.day_name[time_stamp.weekday()],
                             'places': int(slot.find('article').get('data-places-available')),
                             'date_stamp': datetime.fromtimestamp(
                                 int(slot.find('span', itemprop='startDate').get('url-timestamp'))
                             ).strftime('%Y-%m-%d'),
                             'time_start': slot.find('span', itemprop='startDate').get_text(),
                             'time_end': slot.find('span', itemprop='endDate').get_text(),
-                            'time_stamp': datetime.fromtimestamp(
-                                int(slot.find('span', itemprop='startDate').get('url-timestamp'))
-                            ).strftime('%Y-%m-%d %H:00'),
+                            'time_stamp': time_stamp.strftime('%Y-%m-%d %H:00'),
                         }
                     )
             except:
